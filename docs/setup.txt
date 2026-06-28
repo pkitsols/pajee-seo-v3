@@ -1,0 +1,43 @@
+PajeeSEO.online V3 Setup
+========================
+
+Recommended setup for live keyword rankings:
+
+1) Vercel Variables
+-------------------
+Go to Vercel > Project > Settings > Environment Variables and add:
+
+PAGESPEED_API_KEY
+SERPAPI_KEY
+SERP_COUNTRY=pk
+SERP_LANGUAGE=en
+
+Then redeploy. Environment variables do not apply to old deployments.
+
+2) API Test
+-----------
+Open this after redeploy:
+
+/api/seo?action=diagnostics&url=https://example.com&keyword=seo%20agency
+
+Expected:
+- backend.ok = true
+- pagespeed.ok = true
+- serp.ok = true
+- auditFetch.ok = true
+
+3) If you want to use Google CSE instead
+----------------------------------------
+Add:
+GOOGLE_CSE_API_KEY
+GOOGLE_CSE_ID
+
+But if Google shows "This project does not have access to Custom Search JSON API", use SERPAPI_KEY instead.
+
+4) Frontend test
+----------------
+Enter:
+Website URL: https://rosastores.pk/
+Keyword: rosa store
+
+Click Submit & Analyze.

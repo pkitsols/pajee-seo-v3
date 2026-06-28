@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PajeeSEO.online - Live SEO Growth Audit Tool</title>
+  <meta name="description" content="Run a live SEO audit with PageSpeed, keyword ranking checks, website audit, organic visibility signals and AI-style action summary by PajeeSEO.online." />
+  <link rel="icon" href="/assets/pajeeseo-favicon.svg" type="image/svg+xml" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    :root{
+      --brand:#2563eb;
+      --brand2:#7c3aed;
+      --ink:#0f172a;
+      --muted:#64748b;
+      --line:#e2e8f0;
+      --soft:#f8fafc;
+      --mint:#10b981;
+      --amber:#f59e0b;
+      --rose:#f43f5e;
+    }
+    html{scroll-behavior:smooth;}
+    body{font-family:'Inter',sans-serif;background:linear-gradient(180deg,#ffffff 0%,#f8fbff 40%,#f8fafc 100%);color:var(--ink);}
+    .shell{max-width:1180px;margin:0 auto;}
+    .hero-bg{background:
+      radial-gradient(circle at 12% 12%, rgba(37,99,235,.14), transparent 32%),
+      radial-gradient(circle at 88% 6%, rgba(124,58,237,.14), transparent 30%),
+      linear-gradient(180deg,#fff 0%,#f8fbff 100%);
+    }
+    .brand-gradient{background:linear-gradient(135deg,#2563eb 0%,#7c3aed 55%,#db2777 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+    .card{background:rgba(255,255,255,.9);border:1px solid rgba(226,232,240,.9);box-shadow:0 20px 45px rgba(15,23,42,.07);}
+    .mini-card{background:#fff;border:1px solid var(--line);box-shadow:0 12px 30px rgba(15,23,42,.05);}
+    .btn-primary{background:linear-gradient(135deg,#2563eb 0%,#7c3aed 100%);color:#fff;box-shadow:0 14px 30px rgba(37,99,235,.22);}
+    .btn-primary:hover{filter:brightness(.98);transform:translateY(-1px);}
+    .btn-soft{background:#fff;border:1px solid var(--line);color:#334155;}
+    .pill{background:#eef2ff;color:#3730a3;border:1px solid #c7d2fe;}
+    .spinner{width:18px;height:18px;border:2px solid rgba(255,255,255,.5);border-top-color:#fff;border-radius:999px;animation:spin .75s linear infinite;}
+    .spinner-dark{width:18px;height:18px;border:2px solid rgba(37,99,235,.18);border-top-color:#2563eb;border-radius:999px;animation:spin .75s linear infinite;}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .status-dot{width:9px;height:9px;border-radius:999px;background:#cbd5e1;display:inline-block;}
+    .status-running{background:#2563eb;box-shadow:0 0 0 5px rgba(37,99,235,.1);}
+    .status-done{background:#10b981;box-shadow:0 0 0 5px rgba(16,185,129,.1);}
+    .status-warn{background:#f59e0b;box-shadow:0 0 0 5px rgba(245,158,11,.1);}
+    .metric-good{color:#059669}.metric-mid{color:#d97706}.metric-bad{color:#dc2626}
+    .score-ring{background:conic-gradient(var(--ring-color,#2563eb) calc(var(--score,0)*1%), #e2e8f0 0);}
+    .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:16px;background:#fff;}
+    .table{width:100%;border-collapse:collapse;font-size:14px;min-width:760px;}
+    .table th{background:#f8fafc;text-align:left;color:#475569;font-size:12px;text-transform:uppercase;letter-spacing:.04em;padding:14px;border-bottom:1px solid var(--line);}
+    .table td{padding:14px;border-bottom:1px solid #eef2f7;vertical-align:top;}
+    .table tr:last-child td{border-bottom:0;}
+    .gradient-border{position:relative;}
+    .gradient-border:before{content:"";position:absolute;inset:-1px;border-radius:24px;padding:1px;background:linear-gradient(135deg,rgba(37,99,235,.35),rgba(124,58,237,.35),rgba(219,39,119,.25));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;}
+  </style>
+</head>
+<body>
+  <nav class="sticky top-0 z-50 bg-white/85 backdrop-blur-xl border-b border-slate-200/70">
+    <div class="shell px-5 py-4 flex items-center justify-between gap-4">
+      <a href="#top" class="flex items-center gap-3">
+        <img src="/assets/pajeeseo-logo.svg" alt="PajeeSEO.online logo" class="h-10 w-auto" onerror="this.style.display='none';document.getElementById('logoText').classList.remove('hidden')">
+        <span id="logoText" class="hidden text-2xl font-black brand-gradient">PajeeSEO.online</span>
+      </a>
+      <div class="hidden lg:flex items-center gap-7 text-sm font-semibold text-slate-600">
+        <a href="#workflow" class="hover:text-blue-600">SEO Tool</a>
+        <a href="#deliverables" class="hover:text-blue-600">What We Execute</a>
+        <a href="#report" class="hover:text-blue-600">AI Summary</a>
+      </div>
+      <a id="navCta" href="https://wa.me/923001234567?text=Hi%20PajeeSEO.online,%20I%20want%20a%20growth%20SEO%20audit" target="_blank" class="btn-primary rounded-full px-5 py-2.5 text-sm font-bold transition inline-flex items-center gap-2">
+        <i class="fa-brands fa-whatsapp"></i> Get SEO Help
+      </a>
+    </div>
+  </nav>
+
+  <main id="top">
+    <section class="hero-bg pt-16 pb-14 px-5">
+      <div class="shell grid lg:grid-cols-[1.05fr_.95fr] gap-10 items-center">
+        <div>
+          <div class="pill inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-extrabold uppercase tracking-wide">
+            <i class="fa-solid fa-bolt"></i> Live SEO Audit + Sales Conversion Tool
+          </div>
+          <h1 class="mt-6 text-4xl md:text-6xl font-black leading-[1.03] tracking-tight">
+            Check Website SEO, Speed & Ranking with <span class="brand-gradient">PajeeSEO.online</span>
+          </h1>
+          <p class="mt-6 text-lg text-slate-600 leading-relaxed max-w-2xl">
+            Enter a website URL and target keyword. The tool checks PageSpeed, on-page/technical signals, robots/sitemap, keyword ranking signals, related keyword opportunities, and then creates an AI-style execution summary.
+          </p>
+
+          <div class="card gradient-border rounded-3xl p-5 md:p-6 mt-8">
+            <div class="grid md:grid-cols-[1fr_1fr_auto] gap-3">
+              <div>
+                <label class="text-xs font-extrabold text-slate-500 uppercase tracking-wide">Website URL</label>
+                <input id="heroUrl" type="url" placeholder="https://example.com" class="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-4 font-semibold outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100" />
+              </div>
+              <div>
+                <label class="text-xs font-extrabold text-slate-500 uppercase tracking-wide">Target Keyword</label>
+                <input id="heroKeyword" type="text" placeholder="seo agency islamabad" class="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-4 font-semibold outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100" />
+              </div>
+              <div class="flex md:items-end">
+                <button id="heroRunBtn" onclick="startHeroReport()" class="btn-primary w-full md:w-auto h-[58px] rounded-2xl px-7 font-black transition inline-flex items-center justify-center gap-2 whitespace-nowrap">
+                  <span id="heroBtnText">Submit & Analyze</span>
+                  <span id="heroBtnLoader" class="spinner hidden"></span>
+                </button>
+              </div>
+            </div>
+            <div id="heroStatus" class="hidden mt-4 rounded-2xl bg-blue-50 border border-blue-100 px-4 py-3 text-sm font-semibold text-blue-700"></div>
+          </div>
+
+          <div class="mt-7 grid grid-cols-3 gap-3 max-w-2xl">
+            <div class="mini-card rounded-2xl p-4"><div class="text-2xl font-black">5</div><div class="text-xs font-bold text-slate-500">Audit Modules</div></div>
+            <div class="mini-card rounded-2xl p-4"><div class="text-2xl font-black">Live</div><div class="text-xs font-bold text-slate-500">PageSpeed Data</div></div>
+            <div class="mini-card rounded-2xl p-4"><div class="text-2xl font-black">SERP</div><div class="text-xs font-bold text-slate-500">Ranking Check</div></div>
+          </div>
+        </div>
+
+        <div class="card rounded-[32px] p-5 md:p-7 relative overflow-hidden">
+          <div class="absolute -top-24 -right-24 w-64 h-64 rounded-full bg-blue-100 blur-2xl"></div>
+          <div class="absolute -bottom-24 -left-24 w-64 h-64 rounded-full bg-purple-100 blur-2xl"></div>
+          <div class="relative">
+            <div class="flex items-center justify-between mb-5">
+              <div>
+                <div class="text-xs font-extrabold text-slate-400 uppercase tracking-wide">Live Report Preview</div>
+                <h2 class="text-2xl font-black mt-1">SEO Health Snapshot</h2>
+              </div>
+              <div class="w-12 h-12 rounded-2xl bg-blue-600 text-white flex items-center justify-center text-xl"><i class="fa-solid fa-chart-line"></i></div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="mini-card rounded-3xl p-5">
+                <div class="text-xs font-bold text-slate-500">Performance</div>
+                <div id="previewPerf" class="text-4xl font-black mt-2 text-slate-300">--</div>
+              </div>
+              <div class="mini-card rounded-3xl p-5">
+                <div class="text-xs font-bold text-slate-500">SEO Score</div>
+                <div id="previewSeo" class="text-4xl font-black mt-2 text-slate-300">--</div>
+              </div>
+              <div class="mini-card rounded-3xl p-5">
+                <div class="text-xs font-bold text-slate-500">Keyword Rank</div>
+                <div id="previewRank" class="text-4xl font-black mt-2 text-slate-300">--</div>
+              </div>
+              <div class="mini-card rounded-3xl p-5">
+                <div class="text-xs font-bold text-slate-500">Audit Issues</div>
+                <div id="previewIssues" class="text-4xl font-black mt-2 text-slate-300">--</div>
+              </div>
+            </div>
+            <div class="mt-5 rounded-3xl bg-slate-950 text-white p-5">
+              <div class="flex items-center gap-2 text-sm font-bold text-blue-200"><span class="status-dot status-running"></span> Process Flow</div>
+              <div class="mt-4 space-y-3 text-sm">
+                <div class="flex justify-between"><span>Keyword Intelligence</span><span id="flowStatus1" class="text-slate-500">Waiting</span></div>
+                <div class="flex justify-between"><span>Core Web Vitals</span><span id="flowStatus2" class="text-slate-500">Waiting</span></div>
+                <div class="flex justify-between"><span>Website Audit</span><span id="flowStatus3" class="text-slate-500">Waiting</span></div>
+                <div class="flex justify-between"><span>Visibility Signals</span><span id="flowStatus4" class="text-slate-500">Waiting</span></div>
+                <div class="flex justify-between"><span>AI Summary</span><span id="flowStatus5" class="text-slate-500">Waiting</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="workflow" class="py-14 px-5 scroll-mt-24">
+      <div class="shell">
+        <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5 mb-8">
+          <div>
+            <div class="text-sm font-black text-blue-600 uppercase tracking-wide">SEO Workflow</div>
+            <h2 class="text-3xl md:text-4xl font-black mt-2">Run the Complete SEO Growth Report</h2>
+            <p class="text-slate-600 mt-3 max-w-2xl">Each module can run separately, or you can run the full report from the hero form and watch every step process in sequence.</p>
+          </div>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <button id="fullRunBtn" onclick="runFullReport()" class="btn-primary rounded-2xl px-6 py-4 font-black inline-flex items-center justify-center gap-2 transition">
+              <span id="fullRunText">Run Full Report</span>
+              <span id="fullRunLoader" class="spinner hidden"></span>
+            </button>
+            <a href="/api/seo?action=diagnostics&url=https://example.com&keyword=seo%20agency" target="_blank" class="rounded-2xl border border-slate-200 bg-white px-6 py-4 font-black inline-flex items-center justify-center gap-2 hover:border-blue-300">
+              <i class="fa-solid fa-stethoscope"></i> API Test
+            </a>
+          </div>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-6">
+          <article id="cardKeyword" class="card rounded-3xl p-6">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <div class="flex items-center gap-2 text-sm font-black text-blue-600"><span id="dotKeyword" class="status-dot"></span> Step 1</div>
+                <h3 class="text-2xl font-black mt-2">Keyword Research, NLP & Intent</h3>
+                <p class="text-slate-600 text-sm mt-2">Find related keywords, semantic themes, search intent and target-domain SERP positions.</p>
+              </div>
+              <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-xl"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
+            </div>
+            <div class="grid md:grid-cols-2 gap-3 mt-5">
+              <input id="kwUrl" placeholder="Website URL" class="rounded-2xl border border-slate-200 px-4 py-3 font-semibold outline-none focus:border-blue-500" />
+              <input id="kwMain" placeholder="Main keyword" class="rounded-2xl border border-slate-200 px-4 py-3 font-semibold outline-none focus:border-blue-500" />
+              <input id="kwSeed" placeholder="Seed keyword / niche" class="rounded-2xl border border-slate-200 px-4 py-3 font-semibold outline-none focus:border-blue-500" />
+              <select id="kwIntent" class="rounded-2xl border border-slate-200 px-4 py-3 font-semibold outline-none focus:border-blue-500">
+                <option value="auto">Intent Search: Auto</option>
+                <option value="commercial">Commercial</option>
+                <option value="informational">Informational</option>
+                <option value="transactional">Transactional</option>
+                <option value="local">Local SEO</option>
+              </select>
+            </div>
+            <div class="flex flex-wrap gap-3 mt-4">
+              <button id="keywordBtn" onclick="runKeywordModule()" class="btn-soft rounded-2xl px-5 py-3 font-black inline-flex items-center gap-2 transition hover:border-blue-400">
+                <span id="keywordBtnText">Run Keyword Research</span><span id="keywordLoader" class="spinner-dark hidden"></span>
+              </button>
+              <button onclick="fillSemanticSeeds()" class="rounded-2xl bg-slate-100 text-slate-700 px-5 py-3 font-black hover:bg-slate-200">Add NLP Ideas</button>
+            </div>
+            <div id="keywordOutput" class="mt-5 hidden"></div>
+          </article>
+
+          <article id="cardSpeed" class="card rounded-3xl p-6">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <div class="flex items-center gap-2 text-sm font-black text-purple-600"><span id="dotSpeed" class="status-dot"></span> Step 2</div>
+                <h3 class="text-2xl font-black mt-2">PageSpeed & Core Web Vitals</h3>
+                <p class="text-slate-600 text-sm mt-2">Run Google Lighthouse/PageSpeed checks for mobile and desktop performance.</p>
+              </div>
+              <div class="w-12 h-12 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center text-xl"><i class="fa-solid fa-gauge-high"></i></div>
+            </div>
+            <div class="mt-5">
+              <input id="speedUrl" placeholder="Website URL" class="w-full rounded-2xl border border-slate-200 px-4 py-3 font-semibold outline-none focus:border-purple-500" />
+            </div>
+            <button id="speedBtn" onclick="runSpeedModule()" class="btn-soft mt-4 rounded-2xl px-5 py-3 font-black inline-flex items-center gap-2 transition hover:border-purple-400">
+              <span id="speedBtnText">Run PageSpeed</span><span id="speedLoader" class="spinner-dark hidden"></span>
+            </button>
+            <div id="speedOutput" class="mt-5 hidden"></div>
+          </article>
+
+          <article id="cardAudit" class="card rounded-3xl p-6">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <div class="flex items-center gap-2 text-sm font-black text-emerald-600"><span id="dotAudit" class="status-dot"></span> Step 3</div>
+                <h3 class="text-2xl font-black mt-2">Website Audit</h3>
+                <p class="text-slate-600 text-sm mt-2">Check title, meta, H1, canonical, schema, images, robots.txt, sitemap.xml and noindex signals.</p>
+              </div>
+              <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-xl"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+            </div>
+            <div class="mt-5">
+              <input id="auditUrl" placeholder="Website URL" class="w-full rounded-2xl border border-slate-200 px-4 py-3 font-semibold outline-none focus:border-emerald-500" />
+            </div>
+            <button id="auditBtn" onclick="runAuditModule()" class="btn-soft mt-4 rounded-2xl px-5 py-3 font-black inline-flex items-center gap-2 transition hover:border-emerald-400">
+              <span id="auditBtnText">Run Website Audit</span><span id="auditLoader" class="spinner-dark hidden"></span>
+            </button>
+            <div id="auditOutput" class="mt-5 hidden"></div>
+          </article>
+
+          <article id="cardVisibility" class="card rounded-3xl p-6">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <div class="flex items-center gap-2 text-sm font-black text-amber-600"><span id="dotVisibility" class="status-dot"></span> Step 4</div>
+                <h3 class="text-2xl font-black mt-2">Organic Visibility Signals</h3>
+                <p class="text-slate-600 text-sm mt-2">Estimate public Google visibility via site: search, target keyword ranking and top related keyword checks.</p>
+              </div>
+              <div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center text-xl"><i class="fa-solid fa-chart-simple"></i></div>
+            </div>
+            <div class="grid md:grid-cols-2 gap-3 mt-5">
+              <input id="visUrl" placeholder="Website URL" class="rounded-2xl border border-slate-200 px-4 py-3 font-semibold outline-none focus:border-amber-500" />
+              <input id="visKeyword" placeholder="Main keyword" class="rounded-2xl border border-slate-200 px-4 py-3 font-semibold outline-none focus:border-amber-500" />
+            </div>
+            <button id="visBtn" onclick="runVisibilityModule()" class="btn-soft mt-4 rounded-2xl px-5 py-3 font-black inline-flex items-center gap-2 transition hover:border-amber-400">
+              <span id="visBtnText">Run Visibility Check</span><span id="visLoader" class="spinner-dark hidden"></span>
+            </button>
+            <div id="visibilityOutput" class="mt-5 hidden"></div>
+          </article>
+
+          <article id="report" class="card rounded-3xl p-6 lg:col-span-2 scroll-mt-24">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <div class="flex items-center gap-2 text-sm font-black text-pink-600"><span id="dotSummary" class="status-dot"></span> Step 5</div>
+                <h3 class="text-2xl font-black mt-2">AI Summary & Execution Roadmap</h3>
+                <p class="text-slate-600 text-sm mt-2">A practical summary based on real collected signals from speed, ranking, crawlability and on-page checks.</p>
+              </div>
+              <div class="w-12 h-12 bg-pink-50 text-pink-600 rounded-2xl flex items-center justify-center text-xl"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+            </div>
+            <button id="summaryBtn" onclick="buildSummaryModule()" class="btn-soft mt-5 rounded-2xl px-5 py-3 font-black inline-flex items-center gap-2 transition hover:border-pink-400">
+              <span id="summaryBtnText">Generate AI Summary</span><span id="summaryLoader" class="spinner-dark hidden"></span>
+            </button>
+            <div id="summaryOutput" class="mt-5 hidden"></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="deliverables" class="py-14 px-5 bg-white border-y border-slate-200">
+      <div class="shell">
+        <div class="text-center max-w-3xl mx-auto mb-10">
+          <div class="text-sm font-black text-blue-600 uppercase tracking-wide">Turn Audit into Sales</div>
+          <h2 class="text-3xl md:text-4xl font-black mt-2">What PajeeSEO Can Execute For You</h2>
+          <p class="text-slate-600 mt-3">After the tool shows gaps, PajeeSEO can handle the execution work that improves ranking, visibility, and conversions.</p>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div class="mini-card rounded-3xl p-6">
+            <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl"><i class="fa-solid fa-code"></i></div>
+            <h3 class="font-black text-xl mt-4">On-Page + Technical SEO</h3>
+            <p class="text-sm text-slate-600 mt-2">Meta, H1, schema, canonicals, crawl budget, indexation, speed, internal links and technical cleanup.</p>
+            <a href="https://wa.me/923001234567?text=I%20need%20On-page%20and%20Technical%20SEO%20execution" target="_blank" class="mt-4 inline-flex font-black text-blue-600">Get this fixed <i class="fa-solid fa-arrow-right ml-2 mt-1"></i></a>
+          </div>
+          <div class="mini-card rounded-3xl p-6">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl"><i class="fa-solid fa-pen-nib"></i></div>
+            <h3 class="font-black text-xl mt-4">Content Marketing</h3>
+            <p class="text-sm text-slate-600 mt-2">SEO pages, blog clusters, topical authority, product/category copy and conversion-focused content updates.</p>
+            <a href="https://wa.me/923001234567?text=I%20need%20SEO%20content%20marketing%20strategy" target="_blank" class="mt-4 inline-flex font-black text-emerald-600">Plan content <i class="fa-solid fa-arrow-right ml-2 mt-1"></i></a>
+          </div>
+          <div class="mini-card rounded-3xl p-6">
+            <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center text-xl"><i class="fa-solid fa-robot"></i></div>
+            <h3 class="font-black text-xl mt-4">AEO / GEO Visibility</h3>
+            <p class="text-sm text-slate-600 mt-2">Answer-engine optimization for AI search, entity clarity, FAQs, schema, summaries and helpful answer sections.</p>
+            <a href="https://wa.me/923001234567?text=I%20need%20AEO%20and%20GEO%20visibility%20optimization" target="_blank" class="mt-4 inline-flex font-black text-purple-600">Optimize for AI <i class="fa-solid fa-arrow-right ml-2 mt-1"></i></a>
+          </div>
+          <div class="mini-card rounded-3xl p-6">
+            <div class="w-12 h-12 rounded-2xl bg-pink-50 text-pink-600 flex items-center justify-center text-xl"><i class="fa-solid fa-bullseye"></i></div>
+            <h3 class="font-black text-xl mt-4">Keyword & Content Strategy</h3>
+            <p class="text-sm text-slate-600 mt-2">Keyword mapping, intent clusters, competitor gaps, semantic/NLP topics and monthly execution roadmap.</p>
+            <a href="https://wa.me/923001234567?text=I%20need%20keyword%20research%20and%20content%20strategy" target="_blank" class="mt-4 inline-flex font-black text-pink-600">Build strategy <i class="fa-solid fa-arrow-right ml-2 mt-1"></i></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="py-8 px-5 text-center text-sm text-slate-500">
+    <div class="shell">© 2026 PajeeSEO.online — Live SEO Audit & Growth Execution Tool</div>
+  </footer>
+
+<script>
+  const API = '/api/seo';
+  const WHATSAPP_NUMBER = '923001234567';
+  const state = { url:'', keyword:'', seed:'', keywordData:null, speedData:null, auditData:null, visibilityData:null, summaryText:'' };
+
+  function $(id){ return document.getElementById(id); }
+  function esc(str){ return String(str ?? '').replace(/[&<>"]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m])); }
+  function normalizeUrl(value){ let v=(value||'').trim(); if(!v) return ''; if(!/^https?:\/\//i.test(v)) v='https://'+v; return v; }
+  function hostFromUrl(value){ try { return new URL(normalizeUrl(value)).hostname.replace(/^www\./,''); } catch(e){ return value; } }
+  function setLoading(prefix, isLoading, text){
+    const btn=$(prefix+'Btn'), loader=$(prefix+'Loader'), label=$(prefix+'BtnText') || $(prefix+'Text');
+    if(btn) btn.disabled = isLoading;
+    if(loader) loader.classList.toggle('hidden', !isLoading);
+    if(label && text) label.textContent = text;
+  }
+  function setDot(id, status){ const el=$(id); if(!el) return; el.className='status-dot ' + (status==='running'?'status-running':status==='done'?'status-done':status==='warn'?'status-warn':''); }
+  function setFlow(index, text, status='running'){
+    const el=$('flowStatus'+index); if(!el) return;
+    el.textContent=text;
+    el.className=status==='done'?'text-emerald-300 font-bold':status==='warn'?'text-amber-300 font-bold':'text-blue-300 font-bold';
+  }
+  function scoreClass(score){ score=Number(score||0); return score>=90?'metric-good':score>=50?'metric-mid':'metric-bad'; }
+  function positionLabel(pos){ return pos ? '#'+pos : 'Not found top results'; }
+  function intentBadge(intent){ return `<span class="rounded-full bg-slate-100 px-2 py-1 text-xs font-bold text-slate-600">${esc(intent || 'Mixed')}</span>`; }
+  function showHeroStatus(msg){ $('heroStatus').classList.remove('hidden'); $('heroStatus').innerHTML = msg; }
+  function syncInputs(){
+    const url = normalizeUrl($('heroUrl').value || $('kwUrl').value || $('speedUrl').value || $('auditUrl').value || $('visUrl').value);
+    const keyword = ($('heroKeyword').value || $('kwMain').value || $('visKeyword').value || '').trim();
+    state.url=url; state.keyword=keyword; state.seed=($('kwSeed').value || keyword).trim();
+    ['kwUrl','speedUrl','auditUrl','visUrl'].forEach(id => { if($(id) && url) $(id).value=url; });
+    ['kwMain','visKeyword'].forEach(id => { if($(id) && keyword) $(id).value=keyword; });
+    if($('kwSeed') && !$('kwSeed').value && keyword) $('kwSeed').value=keyword;
+  }
+  async function api(action, params={}){
+    const qs = new URLSearchParams({ action, ...params }).toString();
+    const res = await fetch(`${API}?${qs}`);
+    const data = await res.json().catch(()=>({ok:false,error:'Invalid JSON response'}));
+    if(!res.ok || data.ok===false) throw new Error(data.error || data.message || 'Request failed');
+    return data;
+  }
+
+  async function startHeroReport(){
+    syncInputs();
+    if(!state.url || !state.keyword){ alert('Please enter website URL and target keyword.'); return; }
+    $('heroUrl').value=state.url; $('heroKeyword').value=state.keyword;
+    $('heroRunBtn').disabled=true; $('heroBtnLoader').classList.remove('hidden'); $('heroBtnText').textContent='Analyzing...';
+    showHeroStatus('<i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Report started. Scrolling to SEO workflow and running all modules.');
+    document.querySelector('#workflow').scrollIntoView({behavior:'smooth', block:'start'});
+    setTimeout(runFullReport, 350);
+  }
+
+  async function runFullReport(){
+    syncInputs();
+    if(!state.url || !state.keyword){ alert('Please enter website URL and keyword first.'); return; }
+    $('fullRunBtn').disabled=true; $('fullRunLoader').classList.remove('hidden'); $('fullRunText').textContent='Running Full Report...';
+    try{
+      await runKeywordModule(true);
+      await runSpeedModule(true);
+      await runAuditModule(true);
+      await runVisibilityModule(true);
+      await buildSummaryModule(true);
+      showHeroStatus('<i class="fa-solid fa-check-circle mr-2"></i> Full SEO report completed. Check keyword ranking table and AI summary below.');
+      document.querySelector('#report').scrollIntoView({behavior:'smooth', block:'start'});
+    } catch(e){
+      showHeroStatus(`<i class="fa-solid fa-triangle-exclamation mr-2"></i> ${esc(e.message)}. Completed modules are still visible below.`);
+    } finally {
+      $('fullRunBtn').disabled=false; $('fullRunLoader').classList.add('hidden'); $('fullRunText').textContent='Run Full Report';
+      $('heroRunBtn').disabled=false; $('heroBtnLoader').classList.add('hidden'); $('heroBtnText').textContent='Submit & Analyze';
+    }
+  }
+
+  function fillSemanticSeeds(){
+    const kw = ($('kwMain').value || $('heroKeyword').value || 'seo services').trim();
+    $('kwSeed').value = `${kw}, best ${kw}, ${kw} near me, affordable ${kw}, ${kw} agency`;
+  }
+
+  async function runKeywordModule(fromFull=false){
+    syncInputs(); if(!state.url || !state.keyword){ if(!fromFull) alert('Website URL and main keyword required.'); return; }
+    setDot('dotKeyword','running'); setFlow(1,'Running','running'); setLoading('keyword', true, 'Checking SERP...'); $('keywordOutput').classList.remove('hidden'); $('keywordOutput').innerHTML=loadingBlock('Checking target ranking and 5 related keyword positions...');
+    try{
+      const data = await api('keyword', { url: state.url, keyword: state.keyword, seed: state.seed || state.keyword, intent: $('kwIntent').value });
+      state.keywordData=data;
+      $('keywordOutput').innerHTML = renderKeyword(data);
+      $('previewRank').textContent = data.main?.position ? '#'+data.main.position : '--';
+      $('previewRank').className = 'text-4xl font-black mt-2 ' + (data.main?.position ? 'text-blue-600':'text-slate-300');
+      setDot('dotKeyword','done'); setFlow(1,'Done','done');
+    }catch(e){
+      $('keywordOutput').innerHTML=errorBlock(e.message, 'Keyword ranking needs a live SERP provider. Recommended: add SERPAPI_KEY in Vercel. Google CSE works only if your Google project has Custom Search JSON API access.');
+      setDot('dotKeyword','warn'); setFlow(1,'Needs API','warn');
+    }finally{ setLoading('keyword', false, 'Run Keyword Research'); }
+  }
+
+  async function runSpeedModule(fromFull=false){
+    syncInputs(); if(!state.url){ if(!fromFull) alert('Website URL required.'); return; }
+    setDot('dotSpeed','running'); setFlow(2,'Running','running'); setLoading('speed', true, 'Testing Speed...'); $('speedOutput').classList.remove('hidden'); $('speedOutput').innerHTML=loadingBlock('Running Google PageSpeed for mobile and desktop. This can take a little time...');
+    try{
+      const data = await api('pagespeed', { url: state.url });
+      state.speedData=data;
+      $('speedOutput').innerHTML = renderSpeed(data);
+      const mobilePerf = data.mobile?.categories?.performance ?? data.desktop?.categories?.performance;
+      const seo = data.mobile?.categories?.seo ?? data.desktop?.categories?.seo;
+      if(mobilePerf !== undefined){ $('previewPerf').textContent=mobilePerf; $('previewPerf').className='text-4xl font-black mt-2 '+scoreClass(mobilePerf); }
+      if(seo !== undefined){ $('previewSeo').textContent=seo; $('previewSeo').className='text-4xl font-black mt-2 '+scoreClass(seo); }
+      setDot('dotSpeed','done'); setFlow(2,'Done','done');
+    }catch(e){ $('speedOutput').innerHTML=errorBlock(e.message, 'PageSpeed can still work without a key sometimes, but a Vercel env key is recommended for reliable quota.'); setDot('dotSpeed','warn'); setFlow(2,'Check failed','warn'); }
+    finally{ setLoading('speed', false, 'Run PageSpeed'); }
+  }
+
+  async function runAuditModule(fromFull=false){
+    syncInputs(); if(!state.url){ if(!fromFull) alert('Website URL required.'); return; }
+    setDot('dotAudit','running'); setFlow(3,'Running','running'); setLoading('audit', true, 'Auditing Site...'); $('auditOutput').classList.remove('hidden'); $('auditOutput').innerHTML=loadingBlock('Fetching HTML, robots.txt and sitemap.xml signals...');
+    try{
+      const data = await api('audit', { url: state.url });
+      state.auditData=data;
+      $('auditOutput').innerHTML = renderAudit(data);
+      const issues=(data.issues||[]).length;
+      $('previewIssues').textContent=issues;
+      $('previewIssues').className='text-4xl font-black mt-2 '+(issues<=3?'metric-good':issues<=7?'metric-mid':'metric-bad');
+      setDot('dotAudit','done'); setFlow(3,'Done','done');
+    }catch(e){ $('auditOutput').innerHTML=errorBlock(e.message, 'The backend must be able to fetch the target website. Some sites block bots or serverless fetches.'); setDot('dotAudit','warn'); setFlow(3,'Check failed','warn'); }
+    finally{ setLoading('audit', false, 'Run Website Audit'); }
+  }
+
+  async function runVisibilityModule(fromFull=false){
+    syncInputs(); if(!state.url || !state.keyword){ if(!fromFull) alert('Website URL and keyword required.'); return; }
+    setDot('dotVisibility','running'); setFlow(4,'Running','running'); setLoading('vis', true, 'Checking Visibility...'); $('visibilityOutput').classList.remove('hidden'); $('visibilityOutput').innerHTML=loadingBlock('Checking public organic visibility signals and top related keyword ranking...');
+    try{
+      const data = await api('visibility', { url: state.url, keyword: state.keyword, seed: state.seed || state.keyword });
+      state.visibilityData=data;
+      $('visibilityOutput').innerHTML = renderVisibility(data);
+      setDot('dotVisibility','done'); setFlow(4,'Done','done');
+    }catch(e){ $('visibilityOutput').innerHTML=errorBlock(e.message, 'Visibility module needs a live SERP provider. Recommended: SERPAPI_KEY. If using Google CSE, make sure Custom Search JSON API is enabled and the CSE ID is correct.'); setDot('dotVisibility','warn'); setFlow(4,'Needs API','warn'); }
+    finally{ setLoading('vis', false, 'Run Visibility Check'); }
+  }
+
+  async function buildSummaryModule(fromFull=false){
+    setDot('dotSummary','running'); setFlow(5,'Building','running'); setLoading('summary', true, 'Generating Summary...'); $('summaryOutput').classList.remove('hidden'); $('summaryOutput').innerHTML=loadingBlock('Building practical SEO execution roadmap from collected report data...');
+    await new Promise(r=>setTimeout(r,450));
+    const summary = buildLocalSummary(); state.summaryText=summary.plain;
+    $('summaryOutput').innerHTML = summary.html;
+    $('navCta').href = whatsappUrl(summary.plain);
+    setDot('dotSummary','done'); setFlow(5,'Done','done'); setLoading('summary', false, 'Generate AI Summary');
+  }
+
+  function loadingBlock(text){ return `<div class="rounded-2xl bg-blue-50 border border-blue-100 p-4 text-blue-700 font-bold flex items-center gap-3"><span class="spinner-dark"></span>${esc(text)}</div>`; }
+  function errorBlock(title, hint){ return `<div class="rounded-2xl bg-amber-50 border border-amber-200 p-4"><div class="font-black text-amber-800"><i class="fa-solid fa-triangle-exclamation mr-2"></i>${esc(title)}</div><p class="text-sm text-amber-700 mt-1">${esc(hint)}</p></div>`; }
+  function metricCard(label, value, tone='blue'){
+    return `<div class="mini-card rounded-2xl p-4"><div class="text-xs font-black text-slate-500 uppercase">${esc(label)}</div><div class="text-2xl font-black mt-1 text-${tone}-600">${esc(value)}</div></div>`;
+  }
+
+  function renderKeyword(data){
+    const related=(data.related||[]).slice(0,5);
+    const rows=related.map(k=>`<tr><td><strong>${esc(k.keyword)}</strong><div class="text-xs text-slate-500 mt-1">${intentBadge(k.intent)}</div></td><td>${esc(positionLabel(k.position))}</td><td>${esc(k.totalResultsFormatted || k.totalResults || 'N/A')}</td><td>${k.resultUrl?`<a href="${esc(k.resultUrl)}" target="_blank" class="font-bold text-blue-600">Ranking URL</a>`:'<span class="text-slate-400">No target URL found</span>'}</td></tr>`).join('');
+    const top=(data.topResults||[]).slice(0,5).map((r,i)=>`<li class="py-2 border-b border-slate-100 last:border-0"><span class="font-black text-slate-400 mr-2">#${i+1}</span><a href="${esc(r.link)}" target="_blank" class="font-bold text-blue-600">${esc(r.title)}</a><div class="text-xs text-slate-500 truncate">${esc(r.link)}</div></li>`).join('');
+    const sem=(data.semanticThemes||[]).map(t=>`<span class="rounded-full bg-indigo-50 text-indigo-700 border border-indigo-100 px-3 py-1 text-xs font-black">${esc(t)}</span>`).join('');
+    return `<div class="space-y-5">
+      <div class="grid md:grid-cols-3 gap-3">
+        ${metricCard('Main keyword rank', data.main?.position ? '#'+data.main.position : 'Not found', data.main?.position?'blue':'slate')}
+        ${metricCard('SERP results', data.main?.totalResultsFormatted || 'N/A', 'purple')}
+        ${metricCard('Search intent', data.main?.intent || 'Mixed', 'emerald')}
+      </div>
+      <div><h4 class="font-black mb-2">NLP / Semantic Themes</h4><div class="flex flex-wrap gap-2">${sem || '<span class="text-slate-500 text-sm">No themes generated.</span>'}</div></div>
+      <div><h4 class="font-black mb-2">5 Related Keywords + Target Ranking</h4><div class="table-wrap"><table class="table"><thead><tr><th>Keyword</th><th>Target Ranking</th><th>Google Result Count</th><th>Matched Page</th></tr></thead><tbody>${rows}</tbody></table></div></div>
+      <div><h4 class="font-black mb-2">Top SERP Results for Main Keyword</h4><ul class="rounded-2xl border border-slate-200 bg-white px-4">${top}</ul></div>
+    </div>`;
+  }
+
+  function renderSpeed(data){
+    const m=data.mobile||{}, d=data.desktop||{};
+    const block=(label,x)=>{
+      const c=x.categories||{}; const a=x.audits||{}; const perf=c.performance??'--';
+      return `<div class="mini-card rounded-3xl p-5"><div class="flex items-center justify-between"><h4 class="font-black text-lg">${label}</h4><div class="score-ring rounded-full w-16 h-16 flex items-center justify-center" style="--score:${Number(perf)||0};--ring-color:${Number(perf)>=90?'#10b981':Number(perf)>=50?'#f59e0b':'#ef4444'}"><span class="bg-white rounded-full w-12 h-12 flex items-center justify-center font-black ${scoreClass(perf)}">${perf}</span></div></div><div class="grid grid-cols-2 gap-3 mt-4 text-sm"><div><strong>FCP</strong><br><span class="text-slate-600">${esc(a.fcp||'N/A')}</span></div><div><strong>LCP</strong><br><span class="text-slate-600">${esc(a.lcp||'N/A')}</span></div><div><strong>TBT</strong><br><span class="text-slate-600">${esc(a.tbt||'N/A')}</span></div><div><strong>CLS</strong><br><span class="text-slate-600">${esc(a.cls||'N/A')}</span></div></div><div class="grid grid-cols-3 gap-2 mt-4 text-xs"><span class="rounded-xl bg-slate-50 p-2 font-bold">SEO: ${c.seo??'--'}</span><span class="rounded-xl bg-slate-50 p-2 font-bold">Access: ${c.accessibility??'--'}</span><span class="rounded-xl bg-slate-50 p-2 font-bold">Best: ${c.bestPractices??'--'}</span></div></div>`;
+    };
+    return `<div class="grid md:grid-cols-2 gap-4">${block('Mobile',m)}${block('Desktop',d)}</div>`;
+  }
+
+  function renderAudit(data){
+    const checks=data.checks||{}; const issues=data.issues||[];
+    const yes=v=>v?'<span class="font-black text-emerald-600">Yes</span>':'<span class="font-black text-rose-600">No</span>';
+    const issueHtml=issues.length?issues.map(i=>`<li class="py-2 border-b border-slate-100 last:border-0"><strong>${esc(i.title)}</strong><div class="text-sm text-slate-600">${esc(i.fix)}</div></li>`).join(''):'<li class="text-emerald-700 font-bold">No major basic audit issues found in fetched HTML.</li>';
+    const noindex=(data.sitemap?.noindexSamples||[]).map(x=>`<tr><td class="font-semibold">${esc(x.url)}</td><td>${x.noindex?'<span class="text-rose-600 font-black">Noindex</span>':'<span class="text-emerald-600 font-black">Indexable</span>'}</td></tr>`).join('');
+    return `<div class="space-y-5">
+      <div class="grid md:grid-cols-4 gap-3">
+        ${metricCard('Title length', checks.titleLength ?? 'N/A','blue')}
+        ${metricCard('Meta length', checks.metaDescriptionLength ?? 'N/A','purple')}
+        ${metricCard('H1 count', checks.h1Count ?? 'N/A','emerald')}
+        ${metricCard('Images missing alt', checks.imagesMissingAlt ?? 'N/A','amber')}
+      </div>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="mini-card rounded-3xl p-5"><h4 class="font-black mb-3">On-page / Technical Checks</h4><div class="grid grid-cols-2 gap-3 text-sm"><div>Canonical: ${yes(checks.hasCanonical)}</div><div>Schema: ${yes(checks.hasSchema)}</div><div>HTTPS: ${yes(checks.https)}</div><div>Meta robots noindex: ${checks.metaNoindex?'<span class="text-rose-600 font-black">Yes</span>':'<span class="text-emerald-600 font-black">No</span>'}</div><div>Response: <strong>${esc(data.responseTimeMs || 'N/A')}ms</strong></div><div>Status: <strong>${esc(data.status || 'N/A')}</strong></div></div></div>
+        <div class="mini-card rounded-3xl p-5"><h4 class="font-black mb-3">Robots & Sitemap</h4><div class="grid grid-cols-2 gap-3 text-sm"><div>robots.txt: ${yes(data.robots?.found)}</div><div>Sitemap: ${yes(data.sitemap?.found)}</div><div>Sitemap URLs: <strong>${esc(data.sitemap?.urlCount ?? 0)}</strong></div><div>Sample noindex: <strong>${esc(data.sitemap?.noindexCount ?? 0)}</strong></div></div><p class="text-xs text-slate-500 mt-3">Noindex count is based on sampled sitemap URLs fetched by the serverless audit.</p></div>
+      </div>
+      ${noindex?`<div><h4 class="font-black mb-2">Sitemap Indexability Sample</h4><div class="table-wrap"><table class="table"><thead><tr><th>URL</th><th>Status</th></tr></thead><tbody>${noindex}</tbody></table></div></div>`:''}
+      <div><h4 class="font-black mb-2">Priority Issues</h4><ul class="rounded-2xl border border-slate-200 bg-white px-4 py-2">${issueHtml}</ul></div>
+    </div>`;
+  }
+
+  function renderVisibility(data){
+    const rows=(data.rankedKeywords||[]).slice(0,10).map(k=>`<tr><td><strong>${esc(k.keyword)}</strong></td><td>${esc(positionLabel(k.position))}</td><td>${esc(k.totalResultsFormatted||'N/A')}</td><td>${k.resultUrl?`<a href="${esc(k.resultUrl)}" target="_blank" class="font-bold text-blue-600">Open</a>`:'<span class="text-slate-400">Not found</span>'}</td></tr>`).join('');
+    return `<div class="space-y-5"><div class="grid md:grid-cols-3 gap-3">
+      ${metricCard('Google site: results', data.siteResultsFormatted || 'N/A','blue')}
+      ${metricCard('Best keyword position', data.bestPosition ? '#'+data.bestPosition : 'Not found','emerald')}
+      ${metricCard('Keywords checked', data.checkedKeywords || 0,'purple')}
+    </div><div><h4 class="font-black mb-2">Top 5-10 Keyword Ranking Signals</h4><div class="table-wrap"><table class="table"><thead><tr><th>Keyword</th><th>Target Position</th><th>Result Count</th><th>Ranking URL</th></tr></thead><tbody>${rows}</tbody></table></div></div><p class="text-xs text-slate-500">This module checks public SERP results through your configured provider. Exact traffic requires Google Search Console access.</p></div>`;
+  }
+
+  function buildLocalSummary(){
+    const domain=hostFromUrl(state.url||'website'); const kw=state.keyword||'target keyword';
+    const perf=state.speedData?.mobile?.categories?.performance ?? state.speedData?.desktop?.categories?.performance;
+    const seo=state.speedData?.mobile?.categories?.seo ?? state.speedData?.desktop?.categories?.seo;
+    const rank=state.keywordData?.main?.position || state.visibilityData?.bestPosition;
+    const issues=state.auditData?.issues || [];
+    const sitemapCount=state.auditData?.sitemap?.urlCount ?? 0;
+    const issueList=issues.slice(0,5).map(i=>`<li><strong>${esc(i.title)}:</strong> ${esc(i.fix)}</li>`).join('') || '<li>Basic fetched HTML looks clean. Next step should be deeper crawl and competitor comparison.</li>';
+    const rankingText=rank?`The domain is visible around position #${rank} for at least one checked keyword, so the strategy should improve page relevance, internal linking and authority to push it higher.`:`The target domain was not found in the checked top SERP results, so PajeeSEO should prioritize keyword mapping, new landing pages and authority building.`;
+    const speedText=perf!==undefined?(perf>=80?'Core speed is workable, but still optimize images, unused JS and layout shifts for stronger UX.':'Performance needs attention. Compress images, reduce render-blocking JS/CSS, improve caching and review hosting response time.'):'Speed data was not collected in this run.';
+    const plain=`PajeeSEO.online report for ${domain}\nTarget keyword: ${kw}\nPerformance: ${perf ?? 'N/A'}\nSEO score: ${seo ?? 'N/A'}\nKeyword visibility: ${rank ? '#'+rank : 'Not found in checked results'}\nSitemap URLs detected: ${sitemapCount}\nPriority issues: ${issues.slice(0,5).map(i=>i.title).join(', ') || 'No major basic issues'}\n\nRecommended execution: technical/on-page SEO, content marketing, AEO/GEO structure, and keyword/content strategy.`;
+    const html=`<div class="grid lg:grid-cols-[1fr_.75fr] gap-5"><div class="mini-card rounded-3xl p-6"><h4 class="text-2xl font-black">Executive SEO Summary for ${esc(domain)}</h4><p class="text-slate-600 mt-3 leading-relaxed">${esc(rankingText)} ${esc(speedText)} Sitemap analysis detected <strong>${esc(sitemapCount)}</strong> URL signals, and the audit found <strong>${issues.length}</strong> priority issue(s) from the fetched page.</p><h5 class="font-black mt-5 mb-2">Priority Action Items</h5><ul class="list-disc pl-5 space-y-2 text-slate-700">${issueList}</ul></div><div class="mini-card rounded-3xl p-6 bg-slate-950 text-white"><h4 class="text-xl font-black">Recommended PajeeSEO Execution</h4><div class="mt-4 space-y-3 text-sm text-slate-200"><div><strong class="text-white">1. Technical + On-page:</strong> fix crawl/index, speed, schema, metadata, headings and internal links.</div><div><strong class="text-white">2. Content Marketing:</strong> build landing pages and topical blogs around winning clusters.</div><div><strong class="text-white">3. AEO/GEO:</strong> add answer blocks, FAQ schema, entity definitions and AI-search ready summaries.</div><div><strong class="text-white">4. Keyword Strategy:</strong> map related keywords to pages and plan monthly execution.</div></div><a href="${esc(whatsappUrl(plain))}" target="_blank" class="mt-6 w-full btn-primary rounded-2xl px-5 py-4 font-black inline-flex justify-center items-center gap-2"><i class="fa-brands fa-whatsapp"></i> Send Report to PajeeSEO</a></div></div>`;
+    return {html, plain};
+  }
+  function whatsappUrl(text){ return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`; }
+</script>
+</body>
+</html>

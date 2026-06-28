@@ -1,0 +1,22 @@
+<svg width="620" height="160" viewBox="0 0 620 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g1" x1="18" y1="16" x2="146" y2="144" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4F46E5"/>
+      <stop offset="0.52" stop-color="#06B6D4"/>
+      <stop offset="1" stop-color="#14B8A6"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="178" y1="35" x2="520" y2="130" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1E1B4B"/>
+      <stop offset="0.46" stop-color="#312E81"/>
+      <stop offset="1" stop-color="#0F766E"/>
+    </linearGradient>
+  </defs>
+  <rect x="18" y="16" width="128" height="128" rx="34" fill="url(#g1)"/>
+  <path d="M54 108V50H87.5C104.5 50 116 60 116 75.2C116 90.2 104.6 100 87.5 100H71.5V108H54ZM71.5 85.2H86.3C93.9 85.2 98.4 81.3 98.4 75.2C98.4 68.9 93.9 65 86.3 65H71.5V85.2Z" fill="white"/>
+  <path d="M54 116C82 121 112 110 124 88" stroke="white" stroke-width="7" stroke-linecap="round" opacity="0.95"/>
+  <circle cx="123" cy="61" r="11" stroke="white" stroke-width="7" opacity="0.96"/>
+  <path d="M131 69L140 78" stroke="white" stroke-width="7" stroke-linecap="round" opacity="0.96"/>
+  <text x="178" y="86" font-family="Arial, Helvetica, sans-serif" font-size="58" font-weight="900" fill="url(#g2)">PajeeSEO</text>
+  <text x="181" y="122" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="800" fill="#06B6D4">.online</text>
+  <text x="292" y="122" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" fill="#64748B">Real SEO Audit Platform</text>
+</svg>

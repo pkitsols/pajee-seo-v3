@@ -1,0 +1,13 @@
+{
+  "name": "pajeeseo-online-vercel-v3",
+  "version": "3.0.0",
+  "private": true,
+  "description": "PajeeSEO.online live SEO audit tool with Vercel serverless API diagnostics and SERP provider support.",
+  "scripts": {
+    "dev": "vercel dev",
+    "start": "vercel dev"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
